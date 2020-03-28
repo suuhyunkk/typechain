@@ -1,0 +1,16 @@
+{
+  "name": "typeChain",
+  "version": "1.0.0",
+  "description": "Learning TypeScript which is superset of JavaScript by making a BlockChain with it.",
+  "main": "index.js",
+  "repository": "https://github.com/suuhyunkk/typechain",
+  "author": "suuhyunkk <suuhyunkk@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "tsc-watch --onSuccess \" node dist/index.js\" "
+  },
+  "devDependencies": {
+    "tsc-watch": "^4.2.3",
+    "typescript": "^3.8.3"
+  }
+}

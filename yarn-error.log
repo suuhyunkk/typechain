@@ -1,0 +1,46 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js start
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/hyunsoo/miniconda3/miniconda3/bin:/Users/hyunsoo/miniconda3/miniconda3/condabin:/Users/hyunsoo/tools/apache-maven-3.6.3/bin:/Users/hyunsoo/tools/apache-maven-3.6.3/bin:/usr/local/bin
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  10.16.3
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/hyunsoo/javascript_project/typescript_typeChain/package.json: Unexpected token / in JSON at position 373
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:310:30)
+      at /usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "typeChain",
+    "version": "1.0.0",
+    "description": "Learning TypeScript which is superset of JavaScript by making a BlockChain with it.",
+    "main": "index.js",
+    "repository": "https://github.com/suuhyunkk/typechain",
+    "author": "suuhyunkk <suuhyunkk@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+      "start": "node index.js", 
+      "prestart": "tsc"
+    }
+  }
+  
+  // script > start : yarn start 시작시 실행될 명령어 설정. prestart에 입력한 명령어가 먼저 실행되고,
+  // 이후 start에 입력한 명령어가 실행된다.
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
