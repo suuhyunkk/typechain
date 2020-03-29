@@ -1,22 +1,72 @@
-const name ="Hyunsoo",
-    age = 28,
-    gender = "female";
+import * as CryptoJS from "crypto-js";
 
-// 함수 표현식
-const sayHi = (name:string, age:number, gender?:string): string => { // this means gender parameter is optional.
-    return `Hello, ${name}! You are ${age}, and you are a ${gender}.`;
-};
+class Block {
+    public index: number;
+    public hash: string;
+    public previousHash: string;
+    public data: string;
+    public timestamp: number;
 
-sayHi(name, age, gender);
-// const sayHi: (name: any, age: any, gender?: any) => void(어떤 유형의 값을 리턴하는지 설정)
-// const sayHi: (name: string, age: number, gender?: string) => void
+    static calculateBlockHash = ( // static function : class 외부, 객체가 생성되기 전에도 호출 가능한 함수로 정의하겠습니다.
+        index:number, 
+        previousHash:string, 
+        timestamp:number,
+        data:string
+        ):string => { return CryptoJS.SHA256(index + previousHash + timestamp + data).toString();}
+        
+    constructor( // 생성자 함수 정의. (first run)
+        index: number,
+        hash: string,
+        previousHash: string,
+        data: string,
+        timestamp: number
+    ) {
+        this.index = index;
+        this.hash = hash;
+        this.previousHash = previousHash;
+        this.data = data;
+        this.timestamp = timestamp;     
+    }
+}
 
-// 함수표현식과 호이스팅. (결론 : 함수표현식은 호이스팅되지 않으므로 사용이 권장된다.)
-// 함수 표현식은 호이스팅이 되지 않는다. -> 함수가 정의되기 전에 실행 불가능.
-// 함수 선언으로 선언된 함수는 호이스팅 된다. -> 함수가 정의되기 전에 실행이 가능.
-// 이러한 함수 호이스팅은 함수를 사용하기 전에 반드시 함수를 선언해야한다는 규칙을 무시하므로 
-// 코드 구조를 엉성하게 만들 수 도 있으므로 함수 표현식을 권장한다고 한다. 
-// 이러한 내용은 구글에서 만든 자바스크립트 스타일 가이드에도 나와있는데 여기는 함수 표현식도 bad이며 함수 이름이 있는 함수 표현식을 권장한다.
+// Block.calculateBlockHash(); static 함수여서 여기서 호출 가능해.
 
-export {}; // typescript 규칙. 이 파일이 (index.ts) 모듈이 된다는걸 이해할 수 있도록 함.   
-            // 생략 시 변수의 이름을 설정할 수 없다.
+const genesisBlock:Block = new Block(0, "FREDSF_30432", "", "first block", 12345);
+
+let blockChain:Block[] = [genesisBlock]; // Block[] means Array of Block(type)
+
+console.log(blockChain);
+
+const getBlockChain = ():Block[] => blockChain; // it means funcName: "getBlockChain",
+                                                // parameter: none, return value type: Block[] (블럭타입의 배열), return: blockChain
+
+const getLatestBlock = () : Block => blockChain[blockChain.length -1];
+
+const getNewTimeStamp = (): number => Math.round(new Date().getTime() / 1000);
+
+const createNewBlock = (data:string) : Block => {
+    const previousBlock: Block = getLatestBlock();
+    const newIndex: number = previousBlock.index + 1;
+    const newTimeStamp: number = getNewTimeStamp();
+    const newHash: string = Block.calculateBlockHash(
+        newIndex, 
+        previousBlock.hash,
+        newTimeStamp,
+        data
+    );
+    const newBlock: Block = new Block(
+        newIndex,
+        newHash,
+        previousBlock.hash,
+        data,
+        newTimeStamp
+    );
+
+    blockChain.push(newBlock);
+    
+    return newBlock;
+}
+
+console.log(createNewBlock("hello"), createNewBlock("byebye"));
+
+export{};
